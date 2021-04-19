@@ -74,8 +74,6 @@ export default defineComponent({
     FInput
   },
   setup(props, ctx) {
-    console.log('ctx.root.$store', ctx.root.$store)
-
     const formFields = reactive<FormField[]>(user)
 
     const obj: any = {}
@@ -90,7 +88,7 @@ export default defineComponent({
     // const isValid = computed<Promise<boolean>>(() => observer.value.validate())
 
     async function onSubmit() {
-      // await ctx.root.$store.dispatch('user/saveInfos', formFields.value)
+      await ctx.root.$store.dispatch('updateUser', formData)
     }
 
     function onReset() {
