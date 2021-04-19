@@ -8,71 +8,26 @@
         </v-card-title>
         <v-card-text>
           <p>Tout d'abord, les présentations s'imposent, qui êtes-vous?</p>
-          <validation-observer ref="observer" v-slot="{ invalid }">
-            <form @submit.prevent="submit">
-              <validation-provider
-                v-slot="{ errors }"
-                name="Prénom"
-                rules="required|max:10"
-              >
-                <v-text-field
-                  v-model="first_name"
-                  :error-messages="errors"
-                  label="Prénom"
-                  required
-                ></v-text-field>
-              </validation-provider>
-              <validation-provider
-                v-slot="{ errors }"
-                name="Name"
-                rules="required|max:10"
-              >
-                <v-text-field
-                  v-model="name"
-                  :error-messages="errors"
-                  label="Nom"
-                  required
-                ></v-text-field>
-              </validation-provider>
-              <validation-provider
-                v-slot="{ errors }"
-                name="phoneNumber"
-                :rules="{
-                  required: true,
-                }"
-              >
-                <v-text-field
-                  v-model="phoneNumber"
-                  :error-messages="errors"
-                  label="Phone Number"
-                  required
-                ></v-text-field>
-              </validation-provider>
-              <validation-provider
-                v-slot="{ errors }"
-                name="email"
-                rules="required|email"
-              >
-                <v-text-field
-                  v-model="email"
-                  :error-messages="errors"
-                  label="E-mail"
-                  required
-                ></v-text-field>
-              </validation-provider>
-              <v-btn class="mr-4" type="submit" :disabled="invalid">
-                submit
-              </v-btn>
-              <v-btn @click="clear"> clear </v-btn>
-            </form>
-          </validation-observer>
+          <form @submit.prevent="onSubmit">
+            <component
+              v-for="field in formFields"
+              :is="field.component"
+              :key="field.group.id"
+              v-model="formData[field.model]"
+              :field="field"
+              :name="field.input.id"
+            />
+            <v-btn class="mr-4" type="submit"> submit </v-btn>
+            <v-btn @click="clear"> clear </v-btn>
+          </form>
         </v-card-text>
       </v-card>
     </v-col>
   </v-row>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, reactive } from '@nuxtjs/composition-api'
 import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
 import {
   extend,
@@ -80,6 +35,9 @@ import {
   ValidationProvider,
   setInteractionMode,
 } from 'vee-validate'
+import FInput from '@/components/Form/FInput.vue'
+import user from '@/data/user.js'
+import { FormField } from '@/types/components/FormInputs'
 
 setInteractionMode('eager')
 
@@ -108,34 +66,48 @@ extend('email', {
   message: 'Email must be valid',
 })
 
-export default {
+export default defineComponent({
+  name: 'Boarding',
   components: {
     ValidationProvider,
     ValidationObserver,
+    FInput,
   },
-  data() {
-    return this.initialState()
-  },
+  setup(props, ctx) {
+    console.log('ctx.root.$store', ctx.root.$store)
 
-  methods: {
-    initialState() {
-      return {
-        first_name: '',
-        name: '',
-        phoneNumber: '',
-        email: '',
-      }
-    },
-    submit() {
-      const isValid = this.$refs.observer.validate()
-      if (isValid) {
-        console.log('is valid')
-      }
-    },
-    clear() {
-      Object.assign(this.$data, this.initialState())
-      this.$refs.observer.reset()
-    },
+    const formFields = reactive<FormField[]>(user)
+
+    const obj: any = {}
+    user.map((data) => {
+      obj[data.input.id] = ''
+      return obj
+    })
+
+    const formData = reactive<any>(obj)
+
+    // const observer = ref<any>(null)
+    // const isValid = computed<Promise<boolean>>(() => observer.value.validate())
+
+    async function onSubmit() {
+      // await ctx.root.$store.dispatch('user/saveInfos', formFields.value)
+    }
+
+    function onReset() {
+      return true
+    }
+
+    function clear() {
+      // observer.value.reset()
+    }
+
+    return {
+      onSubmit,
+      onReset,
+      clear,
+      formFields,
+      formData,
+    }
   },
-}
+})
 </script>

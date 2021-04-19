@@ -42,7 +42,7 @@ export default {
     })
   },
   async getCats() {
-    let db = await this.getDb()
+    let db: any = await this.getDb()
 
     return new Promise((resolve) => {
       let trans = db.transaction(['cats'], 'readonly')
@@ -51,9 +51,9 @@ export default {
       }
 
       let store = trans.objectStore('cats')
-      let cats = []
+      let cats: any = []
 
-      store.openCursor().onsuccess = (e) => {
+      store.openCursor().onsuccess = (e: { target: { result: any; }; }) => {
         let cursor = e.target.result
         if (cursor) {
           cats.push(cursor.value)
