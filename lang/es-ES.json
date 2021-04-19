@@ -1,0 +1,12 @@
+{
+  "welcome": "Bienvenidad",
+  "submit": "Enviar",
+  "form": {
+    "user": {
+      "phoneNumber": "Número de teléfono",
+      "email": "Dirección de correo electrónico",
+      "first_name": "Nombre propio",
+      "last_name": "apellido"
+    }
+  }
+}

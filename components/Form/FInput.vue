@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-text-field
-      :label="field.labelI18nKey"
+      :label="$t(field.labelI18nKey + '.' + field.input.id)"
       v-bind="field.input"
       @input="$emit('input', $event)"
     ></v-text-field>
@@ -16,17 +16,17 @@ export default defineComponent({
   props: {
     field: {
       type: Object,
-      required: false,
+      required: false
     },
     name: {
-      type: String,
+      type: String
     },
     value: {
-      type: String,
-    },
+      type: String
+    }
   },
   setup(props, ctx) {
     return {}
-  },
+  }
 })
 </script>

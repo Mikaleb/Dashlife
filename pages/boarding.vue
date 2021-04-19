@@ -17,7 +17,7 @@
               :field="field"
               :name="field.input.id"
             />
-            <v-btn class="mr-4" type="submit"> submit </v-btn>
+            <v-btn class="mr-4" type="submit"> {{ $t('submit') }} </v-btn>
             <v-btn @click="clear"> clear </v-btn>
           </form>
         </v-card-text>
@@ -33,37 +33,37 @@ import {
   extend,
   ValidationObserver,
   ValidationProvider,
-  setInteractionMode,
+  setInteractionMode
 } from 'vee-validate'
 import FInput from '@/components/Form/FInput.vue'
-import user from '@/data/user.js'
+import user from '~/data/user.js'
 import { FormField } from '@/types/components/FormInputs'
 
 setInteractionMode('eager')
 
 extend('digits', {
   ...digits,
-  message: '{_field_} needs to be {length} digits. ({_value_})',
+  message: '{_field_} needs to be {length} digits. ({_value_})'
 })
 
 extend('required', {
   ...required,
-  message: '{_field_} can not be empty',
+  message: '{_field_} can not be empty'
 })
 
 extend('max', {
   ...max,
-  message: '{_field_} may not be greater than {length} characters',
+  message: '{_field_} may not be greater than {length} characters'
 })
 
 extend('regex', {
   ...regex,
-  message: '{_field_} {_value_} does not match {regex}',
+  message: '{_field_} {_value_} does not match {regex}'
 })
 
 extend('email', {
   ...email,
-  message: 'Email must be valid',
+  message: 'Email must be valid'
 })
 
 export default defineComponent({
@@ -71,7 +71,7 @@ export default defineComponent({
   components: {
     ValidationProvider,
     ValidationObserver,
-    FInput,
+    FInput
   },
   setup(props, ctx) {
     console.log('ctx.root.$store', ctx.root.$store)
@@ -106,8 +106,8 @@ export default defineComponent({
       onReset,
       clear,
       formFields,
-      formData,
+      formData
     }
-  },
+  }
 })
 </script>

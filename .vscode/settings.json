@@ -1,5 +1,15 @@
 {
     "files.exclude": {
         "node_modules": true
-    }
+    },
+    "workspace.isHidden": false,
+    "launch": {
+        "configurations": [],
+        "compounds": []
+    },
+    "i18n-ally.localesPaths": [
+        "src/i18n/domain",
+        "lang"
+    ],
+    "i18n-ally.keystyle": "nested"
 }

@@ -1,0 +1,12 @@
+{
+  "welcome": "Welcome",
+  "submit": "Submit",
+  "form": {
+    "user": {
+      "email": "E-mail address",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "phoneNumber": "Phone number"
+    }
+  }
+}
