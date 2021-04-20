@@ -4,6 +4,7 @@
       :label="$t(field.labelI18nKey + '.' + field.input.id)"
       v-bind="field.input"
       @input="$emit('input', $event)"
+      :value="value"
     ></v-text-field>
   </div>
 </template>
