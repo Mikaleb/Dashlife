@@ -8,6 +8,7 @@
       app
     >
       <v-list>
+        <!-- LEFT MENU -->
         <v-list-item
           v-for="(item, i) in menuData.items"
           :key="i"
@@ -37,23 +38,29 @@
         <v-toolbar-title v-text="menuData.title" />
       </nuxt-link>
       <v-spacer />
+      <!-- H-MENU -->
+      <current-time></current-time>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn color="transparent" depressed dark v-bind="attrs" v-on="on">
-            {{ userName }} <v-icon>mdi-account</v-icon>
+            <v-icon class="mr-2">mdi-account</v-icon> {{ userName }}
           </v-btn>
         </template>
         <v-list>
+          <!-- USER BTN -->
           <v-list-item
             nuxt
             :to="item.to"
-            v-for="(item, index) in menuData.items"
+            v-for="(item, index) in menuData.menuHorizontal"
             :key="index"
           >
-            <v-list-item-title>
-              {{ item.title }}
-              <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
-            </v-list-item-title>
+            <v-list-item-icon>
+              <v-icon v-text="item.icon"></v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title"></v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -86,9 +93,13 @@
 
 <script lang="ts">
 import { defineComponent, computed, reactive } from '@nuxtjs/composition-api'
+import CurrentTime from '@/components/CurrentTime.vue'
 
 export default defineComponent({
   name: 'DefaultLayout',
+  components: {
+    CurrentTime
+  },
   setup(props, ctx) {
     const user = computed<any>(() => ctx.root.$store.getters['getUser'])
 
@@ -108,16 +119,17 @@ export default defineComponent({
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
+      items: [],
+      menuHorizontal: [
         {
           icon: 'mdi-account',
           title: 'Edit my profile',
           to: process.client ? ctx.root.localePath('user-edit') : ''
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'mdi-power',
+          title: 'Logout',
+          to: '/logout'
         }
       ],
       miniVariant: false,
