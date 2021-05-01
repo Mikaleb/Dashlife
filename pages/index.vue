@@ -4,6 +4,18 @@
       <v-icon class="mr-2">mdi-account</v-icon>
       <nuxt-link :to="localePath('/elements/who')">WHO AM I</nuxt-link>
     </v-col>
+    <v-col cols="12" sm="8" md="6">
+      <v-icon class="mr-2">mdi-heart-pulse</v-icon>
+      <nuxt-link
+        :to="
+          localePath({
+            name: 'elements-id',
+            params: { id: 'health' }
+          })
+        "
+        >Santé</nuxt-link
+      >
+    </v-col>
   </v-row>
 </template>
 
